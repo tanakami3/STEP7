@@ -23,6 +23,8 @@
                 <th>商品画像</th>
                 <th>価格</th>
                 <th>在庫数</th>
+                <th>企業名</th>
+                <th>コメント</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -34,6 +36,8 @@
                 <td>{{ $product->img_path }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->stock }}</td>
+                <td>{{ $product->company }}</td>
+                <td>{{ $product->comment }}</td>
                 <td><a class="btn btn-secondary" href="/product/{{ $product->id }}">詳細</a></td>
                 <form method="POST" action="{{ route('delete', $product->id) }}" onSubmit="return checkDelete('削除しますか？')">
                     @csrf

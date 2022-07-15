@@ -18,6 +18,7 @@
 // ⑤バリデーション作成
 // ⑥エラー処理
 
+
 //商品一覧画面　表示
 Route::get('/', 'ProductController@showList')->name('products');
 
@@ -29,6 +30,9 @@ Route::post('/product/store', 'ProductController@exeStore')->name('store');
 
 //商品詳細画面　表示
 Route::get('/product/{id}', 'ProductController@showDetail')->name('detail');
+
+//商品削除画面　表示
+Route::post('/product/delete/{id}', 'ProductController@exeDelete')->name('delete');
 
 //商品編集画面　表示
 Route::get('/product/edit/{id}', 'ProductController@showEdit')->name('edit');
@@ -42,6 +46,10 @@ Route::get('/create3', 'UploadController@postimg');
 // 画像投稿をコントローラーに送信
 Route::post('/newimgsend', 'UploadController@saveimg');
 
+//検索機能
+Route::get('/searchDisplay','ProductController@searchDisplay')->name('searchDisplay');
+Route::get('/search','ProductController@search')->name('search');
+
 
 //ユーザー登録　画面表示
 Route::get('/user/signup', 'UserController@getSignup')->name('signup');
@@ -51,8 +59,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//商品削除画面　表示
-Route::post('/product/delete/{id}', 'ProductController@exeDelete')->name('delete');
+
 
 
 

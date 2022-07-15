@@ -8,7 +8,7 @@
       <a class="nav-item nav-link active" href="{{ route('products') }}">商品一覧 <span class="sr-only"></span></a>
       <a class="nav-item nav-link" href="{{ route('create') }}">商品登録</a>
       <a class="nav-item nav-link" href="{{ route('home') }}">ログイン</a>
-      <a class="nav-item nav-link" href="{{ route('signup') }}">ユーザー新規登録</a>
+      <a class = "nav-item nav-link" href="{{ route('searchDisplay') }}">商品検索</a>
     </div>
 
   </div>

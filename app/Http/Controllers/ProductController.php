@@ -101,24 +101,26 @@ class ProductController extends Controller
     {
         //商品のデータを受け取る
         $inputs = $request->all();
-        // $img = $request->file('image');
+        $img = $request->file('img');
+        //$path = \Storage::put('/public',$image);
+       // $path = explode('/',$path);
         // if(empty($img)){
-        //     $img = $request->file('image')->getPathname();
-            
+        //    $img = $request->file('image')->getPathname();
         // }
     
         \DB::beginTransaction();
         try {
             //商品を更新
             $product = Product::find($inputs);
-            // $product->fill([
-            //     'product_name' => $inputs['product_name'],
-            //     'company_id' => $inputs['company_id'],
-            //     'price' => $inputs['price'],
-            //     'stock' => $inputs['stock'],
-            //     'comment' => $inputs['comment'],
-            //     'image' => $inputs['img_path']
-            // ]);
+            $product->fill([
+                'product_name' => $inputs['product_name'],
+                'company_id' => $inputs['company_id'],
+                'price' => $inputs['price'],
+                'stock' => $inputs['stock'],
+                'comment' => $inputs['comment'],
+                'img' => $inputs['img_path']
+                //'image' => $path[1],
+            ]);
             $product = save();
             \DB::commit();
         } catch(\Throwable $e) {
@@ -138,20 +140,49 @@ class ProductController extends Controller
      * @param int $id
      * @return view
      */
+    public function exeDelete($id)
+    {
+        if (empty($id)){
+            return false;
+        }
+        try {
+            //商品を削除
+            Product::destroy($id);
+        } catch(\Throwable $e) {
+        throw new \Exception($e -> getMessage());
+        }
 
-     public function exeDelete($id)
-     {
-         if (empty($id)){
-             return false;
-         }
-         try {
-             //商品を削除
-             Product::destroy($id);
-         } catch(\Throwable $e) {
-            throw new \Exception($e -> getMessage());
-         }
-
-         \Session::flash('err_msg','商品を削除しました');
+        \Session::flash('err_msg','商品を削除しました');
          return redirect(route('products'));
-     }
+    }
+    
+    
+     /**
+     * 商品検索
+     * 
+     * 
+     */
+    public function searchDisplay()
+    {
+        return view('product.search',['companies' => company::all(), ]);
+    }
+
+    public function search(Request $request)
+    {
+        $product_name = $request -> keyword;
+        $company = $request -> company;
+
+        //Productテーブルからクエリを取得
+        $query = Product::query();
+
+        //where句で検索結果をproductに代入
+        $products = $query -> where('product_name','like','%'.$product_name.'%') -> get();
+        $products = $query -> where('company','like','%'.$company.'%') -> get();
+
+        //list.blade.phpに検索結果を表示
+        return view('product.list',['products' =>  $products]);
+
+
+    }
+    
 }

@@ -8,7 +8,7 @@
             <h2>商品検索</h2>
             <form action="{{ route('search') }}" method="GET">
                     <input type="text" id="txt-search" class="form-control input-group-prepend" placeholder="キーワードを入力" name="keyword" value="@if (isset($search)) {{ $search }} @endif"></input>
-                    
+                
                     <div class="form-group-sm clearfix">
                         <label for="formGroupExampleInput2" class="mt-3 mb-0">企業名</label>
                             <div class="product-info width-control">

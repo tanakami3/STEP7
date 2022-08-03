@@ -107,7 +107,7 @@ class ProductController extends Controller
         // if(empty($img)){
         //    $img = $request->file('image')->getPathname();
         // }
-    
+            
         \DB::beginTransaction();
         try {
             //商品を更新
@@ -118,7 +118,7 @@ class ProductController extends Controller
                 'price' => $inputs['price'],
                 'stock' => $inputs['stock'],
                 'comment' => $inputs['comment'],
-                'img' => $inputs['img_path']
+                'img_path' => $inputs['image']
                 //'image' => $path[1],
             ]);
             $product = save();
@@ -126,6 +126,7 @@ class ProductController extends Controller
         } catch(\Throwable $e) {
             \DB::rollback();
             throw new \Exception($e -> getMessage());
+           
         }
        
         \Session::flash('err_msg','商品を更新しました');
